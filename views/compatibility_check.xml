@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="custom_compatibility_template" inherit_id="ezim.ezsim_check_compatibility_temp">
+            <xpath expr="//button" position="attributes">
+                <attribute name="class" add="check_comp" separator=" "/>
+            </xpath>
+            <xpath expr="//div[@id='wrap']" position="before">
+                <t t-set="head">
+                    <script src="/web/static/lib/jquery/jquery.js" type="text/javascript"/>
+                    <script type="text/javascript">
+                        $(document).ready(function(){
+                            console.log('siiiiiiii!!!!!!!')
+                            var adding = document.querySelector("button[type='submit']")
+                            console.log('add!!!', adding)
+                            var message = ('There was an error validating this imei.');
+
+                            adding.click(function(ev){
+                                console.log('ev', ev)
+                                var imei = $('#imei').val()
+
+                                console.log("imei", imei);
+                                if (!imei){
+                                    ev.preventDefault();
+                                    ev.stopPropagation();
+                                    alert('provide valid IMEI number or Zip Code');
+
+                                }
+                                if(imei.length > 15)
+                                {
+                                    alert("Please enter a valid IMEI number")
+                                    ev.preventDefault();
+                                    return false;
+                                }
+                                else if(imei.length &lt; 15)
+                                {
+                                    alert("Please enter a valid IMEI number")
+                                    ev.preventDefault();
+                                    return false;
+                                }
+                            });
+                        });
+                    </script>
+
+<!--                    <script type="text/javascript" src="/web/static/js/check_compatibility.js"></script>-->
+                </t>
+            </xpath>
+            <xpath expr="//form" position="before">
+                <t t-if="errors">
+                    <t t-foreach="errors.get('error_message', [])" t-as="err">
+                        <h4 class="text-danger" t-esc="err"/>
+                    </t>
+                </t>
+            </xpath>
+            <xpath expr="//div[hasclass('o_website_form_custom')][1]" position="replace">
+                <div class="form-group row form-field o_website_form_custom o_website_form_required_custom">
+                    <div class="col-lg-3 col-md-4 #{error.get('imei') and 'o_has_error' or ''}">
+                        <label for="imei" class="control-label">
+                            <b>IMEI Number**************</b>
+                        </label>
+                    </div>
+                    <div class="col-lg-7 col-md-8">
+                        <input type="text" name="imei" t-att-value="imei" id="imei"
+                               class="form-control mobile #{error.get('imei') and 'is-invalid' or ''}" required="required"/>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+
+        <template id="custom_ezsim_new_sim_form" inherit_id="ezim.ezsim_new_sim_form">
+            <xpath expr="//div[hasclass('oe_website_sale')]" position="before">
+                <h2 style="text-align:center">New Number Registration</h2>
+            </xpath>
+        </template>
+
+        <template id="custom_ezsim_port_sim_form" inherit_id="ezim.ezsim_port_sim_form">
+            <xpath expr="//div[hasclass('oe_website_sale')]" position="before">
+                <h2 style="text-align:center">Port Number Registration</h2>
+            </xpath>
+            <xpath expr="//input[@name='pin_pass']" position="replace">
+                <input type="password" name="pin_pass" t-attf-class="form-control #{error.get('pin_pass') and 'is-invalid' or ''}" t-att-value="'pin_pass' in checkout and checkout['pin_pass']" />
+            </xpath>
+        </template>
+    </data>
+</odoo>

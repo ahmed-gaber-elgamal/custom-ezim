@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="custom_get_sim_card_template" inherit_id="ezim.get_sim_card_template">
+            <xpath expr="//section[hasclass('s_comparisons')]" position="replace">
+            <section class="s_title pt32 pb32 o_colored_level undefined" data-vcss="001" data-snippet="s_title" data-name="Title" style="background-color: rgb(182, 202, 226) !important;">
+            <div class="s_allow_columns container">
+              <h1 style="text-align: center;">
+                <font style="font-size: 48px;" class="text-o-color-2">Plans</font>
+              </h1>
+            </div>
+          </section>
+            <section class="s_comparisons pb16 pt16 o_colored_level sh_snippet_adv_shadow_4" data-snippet="s_pricing_2" data-name="Pricing - 2" style="">
+            <div class="container">
+              <div class="row">
+                <t t-if="plans_form" default_order="plans.name asc">
+                    <t t-foreach="plans_form" t-as="plans">
+                        <div class="col-md-6 py-3 o_colored_level col-lg-3" data-name="Box">
+                            <div class="card h-100 tp-animation-lift o_colored_level" style="border-radius: 15px;-webkit-box-shadow: 6px 6px 5px 0px rgba(183,183,183,1);-moz-box-shadow: 6px 6px 5px 0px rgba(183,183,183,1);box-shadow: 6px 6px 5px 0px rgba(183,183,183,1);">
+                            <header class="p-4 text-center bg-o-color-1" style="border-radius: 15px;background: rgb(99,162,194);background: linear-gradient(84deg, rgba(99,162,194,1) 0%, rgba(32,56,101,1) 100%);">
+                              <h5>
+                                <font style="font-size: 10px;"><t t-esc="plans.default_code"/></font>
+                              </h5>
+                              <div>
+                                <span style="vertical-align:super">$</span>
+                                <font style="font-size: 36px;"><t t-esc="plans.name"/>\<t t-esc="plans.uom_id.name"/></font>
+                              </div>
+                            </header>
+                            <div class="text-center">
+                            <t t-if="plans.descr1">
+                                <h2 class="mt-3" style="color:#203865;">
+                                <font style="font-size: 36px;"><t t-raw="plans.descr1"/></font>
+<!--                            <font style="font-size: 14px;">\MO</font>-->
+                          </h2>
+
+                            </t>
+                        <ul class="list-group list-group-flush">
+<!--                            <li t-if="plans.descr1" class="list-group-item o_default_snippet_text">-->
+<!--                                <t t-raw="plans.descr1"/>-->
+<!--                            </li>-->
+                            <li t-if="plans.descr2" class="list-group-item o_default_snippet_text">
+                                <t t-raw="plans.descr2"/>
+                            </li>
+                            <li t-if="plans.descr3" class="list-group-item o_default_snippet_text">
+                                <t t-raw="plans.descr3"/>
+                            </li>
+                            <li t-if="plans.descr4" class="list-group-item o_default_snippet_text">
+                                <t t-raw="plans.descr4"/>
+                            </li>
+                            <li t-if="plans.descr5" class="list-group-item o_default_snippet_text">
+                                <t t-raw="plans.descr5"/>
+                            </li>
+                            <li t-if="plans.descr6" class="list-group-item o_default_snippet_text">
+                                <t t-raw="plans.descr6"/>
+                            </li>
+                        </ul>
+                          <div class="pt-4 text-center card-footer">
+                              <input type="hidden" class="product_id_buy" name="product_id_buy"
+                                                   t-att-value="plans.id"/>
+                              <a t-if="cart_result and cart_phone and not cart_resultss" role="button"
+                                   t-att-data-id="plans.id" data-toggle="modal"
+                                   data-target="#modal_select_new_sim_or_ports"
+                                   class="btn btn-fill-primary rounded-circle js_check_product a-submit add_to_cart">
+                                    <i class="fa fa-shopping-cart"/>
+                                    Buy Now
+                                </a>
+                                <a t-if="cart_result and cart_phone and cart_resultss and not cart_plan"
+                                   role="button"
+                                   t-att-data-id="plans.id" data-toggle="modal"
+                                   data-target="#modal_select_new_sim_or_ports"
+                                   class="btn btn-fill-primary rounded-circle js_check_product a-submit add_to_cart">
+                                    <i class="fa fa-shopping-cart"/>
+                                    Buy Now
+                                </a>
+                                <a t-if="not(cart_result or cart_resultss) or not cart_phone" role="button"
+                                   t-att-data-id="plans.id" data-toggle="modal"
+                                   data-target="#modal_buy_phone_or_buy_plan"
+                                   class="btn btn-fill-primary rounded-circle js_check_product a-submit add_to_cart">
+                                    <i class="fa fa-shopping-cart"/>
+                                    Buy Now
+                                </a>
+                                <a t-if="cart_result and cart_phone and cart_resultss and cart_plan"
+                                   role="button"
+                                   href="/shop/cart"
+                                   class="btn btn-fill-primary rounded-circle js_check_product a-submit add_to_cart">
+                                    <i class="fa fa-shopping-cart"/>
+                                    Buy Now
+                                </a>
+
+<!--                            <br/>-->
+<!--                            <br/>-->
+                          </div>
+                                <div class="modal fade" id="modal_select_new_sim_or_ports" tabindex="-1"
+                                             role="'dialog" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close" tabindex="-1">×
+                                                        </button>
+                                                    </div>
+                                                    <div id="wrap" class="oe_structure oe_empty">
+                                                        <ol/>
+                                                        <ol/>
+                                                        <section class="s_features_grid pb0 pt0"
+                                                                 data-name="Features Grid">
+                                                            <div class="container">
+                                                                <div class="row">
+                                                                    <div class="s_col_no_bgcolor offset-lg-1 pb0 col-lg-5">
+                                                                        <div class="row">
+                                                                            <div class="pt16 pb16 col-lg-11"
+                                                                                 data-name="Box">
+                                                                                <a t-attf-href="/compatibility/new_number?id=#{plans.id}"
+                                                                                   class="navbar-brand logo">
+                                                                                    <span class="fa fa-2x rounded-circle bg-primary s_features_grid_icon rounded fa-bookmark"
+                                                                                          data-original-title=""
+                                                                                          title=""
+                                                                                          aria-describedby="tooltip991837"/>
+                                                                                    <div class="s_features_grid_content">
+                                                                                        <h4>
+                                                                                            <br/>
+                                                                                        </h4>
+                                                                                        <h5>New Number&amp;nbsp;</h5>
+                                                                                        <p>&amp;nbsp;</p>
+                                                                                    </div>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+<!---->
+                                                                    <div class="s_col_no_bgcolor pb0 col-lg-4">
+                                                                        <div class="row">
+                                                                            <div class="pt16 pb16 col-lg-15"
+                                                                                 data-name="Box">
+                                                                                <a t-attf-href="/compatibility/port_number?id=#{plans.id}"
+                                                                                   class="navbar-brand logo">
+                                                                                    <span class="fa fa-2x rounded bg-secondary s_features_grid_icon fa-rocket rounded-circle"
+                                                                                          data-original-title=""
+                                                                                          title=""
+                                                                                          aria-describedby="tooltip429904"/>
+                                                                                    <div class="s_features_grid_content">
+                                                                                        <h4 style="text-align: center; ">
+                                                                                            <br/>
+                                                                                        </h4>
+                                                                                        <h5 style="text-align: center; ">
+                                                                                            Port Number&amp;nbsp;
+                                                                                        </h5>
+                                                                                        <p>&amp;nbsp;</p>
+                                                                                    </div>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+<!---->
+                                                </div>
+                                            </div>
+<!---->
+                                        </div>
+
+
+                                        <div class="css_quantity input-group oe_website_spinner" contenteditable="false"
+                                             padding="50px;" type="Hide">
+
+                                            <div>
+                                                <input type="text" class="form-control quantity" data-min="1"
+                                                       name="add_qty"
+                                                       t-att-value="add_qty or 1" id="update_qty"
+                                                       style="visibility:Hidden;"/>
+                                            </div>
+<!---->
+                                        </div>
+                        </div>
+                      </div>
+                    </div>
+                        <div class="modal fade" id="modal_buy_phone_or_buy_plan" tabindex="-1" role="'dialog"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close" tabindex="-1">×
+                                                </button>
+                                            </div>
+                                            <div id="wrap" class="oe_structure oe_empty">
+                                                <ol/>
+                                                <ol/>
+                                                <section class="s_features pt32 pb32" data-name="Features">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <input type="hidden" id="id_plan" name="id_plan"/>
+                                                            <div class="pt32 pb32 text-center offset-lg-2 col-lg-4">
+                                                                <!--                                                    <a id="existing_phone" t-foreach="plans" t-as="pl" t-attf-href="/plan/compatibility?id=#{pl.id}">-->
+                                                                <a id="existing_phone">
+                                                                    <span class="fa fa-3x rounded-circle bg-gamma m-3 fa-credit-card"/>
+                                                                    <h3>
+                                                                        <font style="font-size: 14px;">I HAVE ALREADY A
+                                                                            PHONE
+                                                                        </font>
+                                                                    </h3>
+                                                                    <!--                                                        <t t-esc="plans.id"/>-->
+                                                                </a>
+                                                                <p>
+                                                                    <br/>
+                                                                </p>
+                                                            </div>
+                                                            <div class="pt32 pb32 text-center offset-lg-1 col-lg-4">
+                                                                <input type="hidden" id="id_plan" name="id_plan"/>
+                                                                <a id="new_phone">
+                                                                    <span class="fa fa-3x rounded bg-epsilon m-3 fa-shopping-bag"/>
+                                                                    <h3>
+                                                                        <font style="font-size: 14px;">BUY A NEW PHONE
+                                                                        </font>
+                                                                    </h3>
+                                                                </a>
+                                                                <p>
+                                                                    <br/>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                    </t>
+                </t>
+              </div>
+            </div>
+          </section>
+
+            </xpath>
+        </template>
+    </data>
+</odoo>

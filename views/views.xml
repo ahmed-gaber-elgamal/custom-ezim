@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="custom_ezim_product_template_form_view" model="ir.ui.view">
+            <field name="name">custom_ezim.product.template.common.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='website_id']" position="after">
+                    <field name="website_published"/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>
